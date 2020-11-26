@@ -20,4 +20,9 @@ jobs:
             // Get existing labels on PR
             const existingLabels = pull.labels.map(label => label.name)
 
-            return existingLabels
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: existingLabels.toString()
+            })
