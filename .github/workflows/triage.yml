@@ -19,11 +19,11 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number
             })
-
             if (!labels.map(label => label.name).includes('enhancement')) {
-              console.log('No enhancement label found. Running tests.')
+              console.log('No CI-syntax-only label found. Running tests.')
               return true
             }
+            console.log('CI-syntax-only label found. Skipping tests.')
 
   post-comment:
     needs: get-labels
