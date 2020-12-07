@@ -34,7 +34,7 @@ jobs:
   post-comment:
     needs: get-labels
     runs-on: ubuntu-latest
-    if: needs.get-labels.outputs.ci-syntax-only
+    if: always() && needs.get-labels.outputs.ci-syntax-only
     steps:
       - name: Post comment
         uses: actions/github-script@v3
