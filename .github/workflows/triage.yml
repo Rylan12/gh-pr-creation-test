@@ -19,7 +19,7 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number
             })
-            if (!labels.map(label => label.name).includes('enhancement')) {
+            if (!labels.map(label => label.name).includes('CI-syntax-only')) {
               console.log('No CI-syntax-only label found. Running tests.')
               return true
             }
