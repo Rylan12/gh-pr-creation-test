@@ -41,7 +41,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-          console.log(${{ needs.get-labels.outputs.ci-syntax-only }})
+            console.log(${{ needs.get-labels.outputs.ci-syntax-only }})
             labels = ${{ needs.get-labels.outputs.labels }}
             github.issues.createComment({
               issue_number: context.issue.number,
