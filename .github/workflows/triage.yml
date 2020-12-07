@@ -6,7 +6,7 @@ jobs:
   get-labels:
     runs-on: ubuntu-latest
     outputs:
-      labels: ${{ steps.labels.outputs.result }}
+      ci-syntax-only: ${{ steps.labels.outputs.result }}
     steps:
       - name: Get Labels
         id: labels
@@ -22,14 +22,19 @@ jobs:
 
             // Get existing labels on PR
             return pull.labels.map(label => label.name)*/
-            console.log(context)
-            console.log("---------------")
-            console.log(context.payload.pull_request.labels)
-            return context.payload.pull_request.labels.map(label => label.name)
+            // console.log(context)
+            // console.log("---------------")
+            // console.log(context.payload.pull_request.labels)
+
+            const labels =  context.payload.pull_request.labels.map(label => label.name)
+            console.log(`Labels: ${labels.toString()}`)
+            console.log(contains(github.event.pull_request.labels.*.name, 'CI-syntax-only'))
+            return contains(github.event.pull_request.labels.*.name, 'enhancement')
 
   post-comment:
     needs: get-labels
     runs-on: ubuntu-latest
+    if: needs.get-labels.outputs.ci-syntax-only
     steps:
       - name: Post comment
         uses: actions/github-script@v3
