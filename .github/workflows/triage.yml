@@ -28,6 +28,7 @@ jobs:
 
             const labels =  context.payload.pull_request.labels.map(label => label.name)
             console.log(`Labels: ${labels.toString()}`)
+            console.log(labels.includes('enhancement'))
             return labels.includes('enhancement')
 
   post-comment:
@@ -40,10 +41,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+          console.log(${{ needs.get-labels.outputs.ci-syntax-only }})
             labels = ${{ needs.get-labels.outputs.labels }}
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Labels: [${labels.toString()}]`
+              body: 'enhancement not applied'
             })
