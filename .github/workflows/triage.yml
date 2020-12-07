@@ -28,8 +28,7 @@ jobs:
 
             const labels =  context.payload.pull_request.labels.map(label => label.name)
             console.log(`Labels: ${labels.toString()}`)
-            console.log(contains(github.event.pull_request.labels.*.name, 'CI-syntax-only'))
-            return contains(github.event.pull_request.labels.*.name, 'enhancement')
+            return contains(labels, 'enhancement')
 
   post-comment:
     needs: get-labels
