@@ -21,22 +21,9 @@ jobs:
             })
 
             if (!labels.map(label => label.name).includes('enhancement')) {
-              console.log('Enhancement label found. Skipping tests.')
+              console.log('No enhancement label found. Running tests.')
               return true
             }
-
-            // console.log(pull)
-            // Get existing labels on PR
-            // return pull.labels.map(label => label.name)
-            // console.log(context)
-            // console.log("---------------")
-            // console.log(context.payload.pull_request.labels)
-
-            // const labels =  context.payload.pull_request.labels.map(label => label.name)
-            // console.log(`Labels: ${labels.toString()}`)
-            // console.log(labels.includes('enhancement'))
-            // if (!labels.includes('enhancement'))
-            //   return true
 
   post-comment:
     needs: get-labels
