@@ -28,7 +28,7 @@ jobs:
 
             const labels =  context.payload.pull_request.labels.map(label => label.name)
             console.log(`Labels: ${labels.toString()}`)
-            return contains(labels, 'enhancement')
+            return labels.includes('enhancement')
 
   post-comment:
     needs: get-labels
