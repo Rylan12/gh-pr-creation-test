@@ -20,9 +20,10 @@ jobs:
               pull_number: context.issue.number
             })
 
-            if (!pull.data.labels.includes('enhancement'))
+            if (!pull.data.labels.includes('enhancement')) {
               console.log('Enhancement label found. Skipping tests.')
               return true
+            }
 
             // console.log(pull)
             // Get existing labels on PR
