@@ -14,14 +14,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            /*const pull = await github.pulls.get({
+            const pull = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number
             })
 
+            console.log(pull)
             // Get existing labels on PR
-            return pull.labels.map(label => label.name)*/
+            // return pull.labels.map(label => label.name)
             // console.log(context)
             // console.log("---------------")
             // console.log(context.payload.pull_request.labels)
