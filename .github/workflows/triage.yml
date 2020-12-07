@@ -14,13 +14,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const pull = await github.pulls.get({
+            const { data: { labels: labels } } = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number
             })
 
-            if (!pull.data.labels.includes('enhancement')) {
+            if (!labels.map(label => label.name).includes('enhancement')) {
               console.log('Enhancement label found. Skipping tests.')
               return true
             }
