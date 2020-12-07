@@ -22,7 +22,8 @@ jobs:
 
             // Get existing labels on PR
             return pull.labels.map(label => label.name)*/
-            console.log(context)
+            console.log(context.pull_request.labels)
+            return context.pull_request.labels.map(label => label.name)
 
   post-comment:
     needs: get-labels
