@@ -14,20 +14,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const github1 = require('@actions/github')
-
-            const token = core.getInput("github-token", { required: true })
-
-            const client = github1.getOctokit(token)
-
-            const pull = await github.pulls.get({
+            /*const pull = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number
             })
 
             // Get existing labels on PR
-            return pull.labels.map(label => label.name)
+            return pull.labels.map(label => label.name)*/
+            console.log(context)
 
   post-comment:
     needs: get-labels
