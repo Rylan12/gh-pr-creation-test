@@ -1,6 +1,9 @@
 name: Triage tasks
 
-on: pull_request
+on:
+  push:
+    branches: main
+  pull_request:
 
 jobs:
   get-labels:
@@ -10,6 +13,7 @@ jobs:
     steps:
       - name: Get Labels
         id: labels
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -28,7 +32,7 @@ jobs:
   post-comment:
     needs: get-labels
     runs-on: ubuntu-latest
-    if: needs.get-labels.outputs.run-tests
+    if: github.event_name == 'pull_request' && needs.get-labels.outputs.run-tests
     steps:
       - name: Post comment
         uses: actions/github-script@v3
