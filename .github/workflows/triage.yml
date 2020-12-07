@@ -6,7 +6,7 @@ jobs:
   get-labels:
     runs-on: ubuntu-latest
     outputs:
-      ci-syntax-only: ${{ steps.labels.outputs.result }}
+      run-tests: ${{ steps.labels.outputs.result }}
     steps:
       - name: Get Labels
         id: labels
@@ -29,23 +29,23 @@ jobs:
             const labels =  context.payload.pull_request.labels.map(label => label.name)
             console.log(`Labels: ${labels.toString()}`)
             console.log(labels.includes('enhancement'))
-            return labels.includes('enhancement')
+            if (!labels.includes('enhancement'))
+              return true
 
   post-comment:
     needs: get-labels
     runs-on: ubuntu-latest
-    if: always() && needs.get-labels.outputs.ci-syntax-only == false
+    if: needs.get-labels.outputs.run-tests
     steps:
       - name: Post comment
         uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(${{ needs.get-labels.outputs.ci-syntax-only }})
-            labels = ${{ needs.get-labels.outputs.labels }}
+            console.log(${{ needs.get-labels.outputs.run-tests }})
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'enhancement not applied'
+              body: 'enhancement not applied: running tests'
             })
